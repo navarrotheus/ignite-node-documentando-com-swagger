@@ -1,0 +1,191 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Users API Documentation",
+    "description": "This is an Users manager API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Matheus"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "exemplo@email.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User with email already exists."
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List users",
+        "description": "List all users",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Id of the user thats trying to list all users"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully list all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 1
+                        },
+                      "name": {
+                        "type": "string",
+                        "example": "Matheus"
+                      },
+                      "admin": {
+                        "type": "boolean",
+                        "example": false,
+                        "default": false
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "exemplo@email.com"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "example": "2021-04-26T12:52:51.860Z"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "example": "2021-04-26T12:52:51.860Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exists / Have insuficient permissions."
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Change to admin",
+        "description": "Change the user to an admin user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Id of the user to patch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully turn the user to admin"
+          },
+          "400": {
+            "description": "User does not exists."
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Show the user",
+        "description": "Show the specific user information",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Id of the user to show"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully show the user info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Matheus"
+                    },
+                    "admin": {
+                      "type": "boolean",
+                      "example": false,
+                      "default": false
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "exemplo@email.com"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "example": "2021-04-26T12:52:51.860Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "example": "2021-04-26T12:52:51.860Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exists."
+          }
+        }
+      }
+    }
+  }
+}
